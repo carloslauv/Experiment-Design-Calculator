@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+/* ── Design tokens ────────────────────────────────────────────────────────── */
+:root {
+  --paper:  #F5EEE3;
+  --ink:    #1B1B1B;
+  --accent: #1A5E50;
+  --signal: #2F7D55;
+  --noise:  #BC4A2C;
+  --muted:  #7A7060;
+  --dim:    rgba(27, 27, 27, 0.11);
+  --shadow: 4px 4px 0 #1B1B1B;
+}
+
+@theme inline {
+  --color-paper:  var(--paper);
+  --color-ink:    var(--ink);
+  --color-accent: var(--accent);
+  --color-signal: var(--signal);
+  --color-noise:  var(--noise);
+  --color-muted:  var(--muted);
+  --font-serif:   var(--font-newsreader), Georgia, 'Times New Roman', serif;
+  --font-mono:    var(--font-spline), 'Courier New', Courier, monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Utility classes ──────────────────────────────────────────────────────── */
+.btn {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.4rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+}
+
+.btn-fill {
+  background: var(--accent);
+  color: #F5EEE3;
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
+}
+
+.btn-fill:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--dim);
+}
+
+.btn-ghost:hover {
+  border-color: var(--ink);
+}
+
+.card {
+  border: 1px solid var(--dim);
+  box-shadow: var(--shadow);
+}
