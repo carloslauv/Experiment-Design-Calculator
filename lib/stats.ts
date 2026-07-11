@@ -1,5 +1,5 @@
 /**
- * Clearcut stats engine — two-proportion z-test for A/B experiments.
+ * Stats engine — two-proportion z-test for A/B experiments.
  * All functions are pure and side-effect free.
  */
 

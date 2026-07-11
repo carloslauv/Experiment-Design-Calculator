@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export const metadata = { title: "How experiments work — Clearcut" };
+export const metadata = { title: "How experiments work — Experiment Builder" };
 
 const STEP_NUM: React.CSSProperties = {
   fontFamily: "var(--font-mono)",
@@ -67,8 +67,8 @@ export default function GuidePage() {
 
         {/* Nav */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "3rem" }}>
-          <Link href="/" style={{ fontFamily: "var(--font-mono)", fontSize: "0.62rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", textDecoration: "none" }}>
-            ← Clearcut
+          <Link href="/" style={{ fontSize: "0.85rem", fontWeight: 800, letterSpacing: "-0.02em", color: "var(--accent)", textDecoration: "none" }}>
+            ← Experiment Builder
           </Link>
           <Link href="/app" style={{ fontFamily: "var(--font-mono)", fontSize: "0.62rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", textDecoration: "none", border: "1px solid var(--dim)", padding: "0.4rem 0.7rem" }}>
             Open calculator →
@@ -242,10 +242,9 @@ export default function GuidePage() {
             style={{
               display: "inline-block",
               padding: "0.75rem 2rem",
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.7rem",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
+              fontSize: "0.82rem",
+              fontWeight: 600,
+              borderRadius: "7px",
               background: "var(--accent)",
               color: "#fff",
               textDecoration: "none",
@@ -253,6 +252,17 @@ export default function GuidePage() {
           >
             Open the calculator →
           </Link>
+          <p style={{ marginTop: "2rem", fontSize: "0.72rem", color: "var(--faint, #94a3c0)" }}>
+            Built by{" "}
+            <Link
+              href="https://www.linkedin.com/in/carloslau"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "var(--accent)", textDecoration: "none", fontWeight: 500 }}
+            >
+              Carlos Lau
+            </Link>
+          </p>
         </div>
 
       </div>

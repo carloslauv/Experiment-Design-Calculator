@@ -2,7 +2,7 @@ import { auth } from "@/lib/auth";
 import { listScenarios } from "@/lib/actions/scenarios";
 import AppShell from "@/components/AppShell";
 
-export const metadata = { title: "Calculator — Clearcut" };
+export const metadata = { title: "Calculator — Experiment Builder" };
 
 export default async function AppPage() {
   const session = await auth();

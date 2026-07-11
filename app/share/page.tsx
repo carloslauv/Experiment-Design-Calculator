@@ -3,7 +3,7 @@ import Calculator from "@/components/Calculator";
 import { paramsToInputs } from "@/components/Calculator";
 import type { ScenarioInputs } from "@/lib/actions/scenarios";
 
-export const metadata = { title: "Shared experiment — Clearcut" };
+export const metadata = { title: "Shared experiment — Experiment Builder" };
 
 interface Props {
   searchParams: Promise<Record<string, string>>;
@@ -37,20 +37,18 @@ export default async function SharePage({ searchParams }: Props) {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "2rem" }}>
           <div>
             <p style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.6rem",
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
+              fontSize: "0.95rem",
+              fontWeight: 800,
+              letterSpacing: "-0.02em",
               color: "var(--accent)",
               marginBottom: "0.35rem",
             }}>
-              Clearcut
+              Experiment Builder
             </p>
             <h1 style={{
-              fontFamily: "var(--font-serif)",
               fontSize: "1.6rem",
-              fontWeight: "normal",
-              fontStyle: "italic",
+              fontWeight: 700,
+              letterSpacing: "-0.02em",
               color: "var(--ink)",
             }}>
               Shared experiment

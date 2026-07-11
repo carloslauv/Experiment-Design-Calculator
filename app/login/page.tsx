@@ -1,7 +1,8 @@
 import { signIn, auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
-export const metadata = { title: "Sign in — Clearcut" };
+export const metadata = { title: "Sign in — Experiment Builder" };
 
 export default async function LoginPage() {
   const session = await auth();
@@ -18,38 +19,29 @@ export default async function LoginPage() {
         background: "var(--paper)",
       }}
     >
-      <div
-        style={{
-          width: "100%",
-          maxWidth: 420,
-        }}
-      >
+      <div style={{ width: "100%", maxWidth: 420 }}>
         <p
           style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.82rem",
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
+            fontSize: "0.95rem",
+            fontWeight: 800,
+            letterSpacing: "-0.02em",
             color: "var(--accent)",
             marginBottom: "2rem",
             textAlign: "center",
           }}
         >
-          Clearcut
+          Experiment Builder
         </p>
 
         <div
           className="card"
-          style={{
-            padding: "2.5rem",
-          }}
+          style={{ padding: "2.5rem" }}
         >
           <h1
             style={{
-              fontFamily: "var(--font-serif)",
               fontSize: "1.6rem",
-              fontWeight: "normal",
-              fontStyle: "italic",
+              fontWeight: 700,
+              letterSpacing: "-0.02em",
               marginBottom: "0.5rem",
             }}
           >
@@ -57,7 +49,6 @@ export default async function LoginPage() {
           </h1>
           <p
             style={{
-              fontFamily: "var(--font-serif)",
               fontSize: "0.9rem",
               color: "var(--muted)",
               marginBottom: "2rem",
@@ -67,7 +58,6 @@ export default async function LoginPage() {
             Continue to your experiment calculator.
           </p>
 
-          {/* Google OAuth */}
           <form
             action={async () => {
               "use server";
@@ -82,8 +72,19 @@ export default async function LoginPage() {
               Continue with Google
             </button>
           </form>
-
         </div>
+
+        <p style={{ textAlign: "center", marginTop: "1.5rem", fontSize: "0.72rem", color: "var(--faint, #94a3c0)" }}>
+          Built by{" "}
+          <Link
+            href="https://www.linkedin.com/in/carloslau"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "var(--accent)", textDecoration: "none", fontWeight: 500 }}
+          >
+            Carlos Lau
+          </Link>
+        </p>
       </div>
     </main>
   );

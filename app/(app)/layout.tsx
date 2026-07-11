@@ -14,42 +14,52 @@ export default async function AppLayout({
 
   return (
     <>
-      <header style={{ borderBottom: "1px solid var(--dim)" }}>
+      <header style={{ borderBottom: "1px solid var(--dim)", background: "var(--paper)" }}>
         <div
           style={{
             maxWidth: 1140,
             margin: "0 auto",
-            padding: "0 2.5rem",
+            padding: "0 2rem",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            height: 58,
+            height: 56,
           }}
         >
           <span
             style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.82rem",
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
+              fontSize: "0.95rem",
+              fontWeight: 800,
+              letterSpacing: "-0.02em",
               color: "var(--accent)",
             }}
           >
-            Clearcut
+            Experiment Builder
           </span>
           <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
             <Link
               href="/guide"
               style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.68rem",
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
+                fontSize: "0.78rem",
+                fontWeight: 500,
                 color: "var(--muted)",
                 textDecoration: "none",
               }}
             >
               Guide
+            </Link>
+            <Link
+              href="https://www.linkedin.com/in/carloslau"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontSize: "0.72rem",
+                fontWeight: 500,
+                color: "var(--faint, #94a3c0)",
+                textDecoration: "none",
+              }}
+            >
+              By Carlos Lau
             </Link>
             {session.user.image && (
               // eslint-disable-next-line @next/next/no-img-element
@@ -63,9 +73,8 @@ export default async function AppLayout({
             )}
             <span
               style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.72rem",
-                letterSpacing: "0.04em",
+                fontSize: "0.78rem",
+                fontWeight: 500,
                 color: "var(--muted)",
               }}
             >
@@ -80,13 +89,12 @@ export default async function AppLayout({
               <button
                 type="submit"
                 style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "0.68rem",
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
+                  fontSize: "0.72rem",
+                  fontWeight: 500,
                   background: "transparent",
-                  border: "1px solid var(--dim)",
-                  padding: "0.4rem 0.875rem",
+                  border: "1.5px solid var(--dim)",
+                  borderRadius: "6px",
+                  padding: "0.35rem 0.85rem",
                   color: "var(--muted)",
                   cursor: "pointer",
                 }}

@@ -1,41 +1,47 @@
 import Link from "next/link";
 import NumberLineGauge from "@/components/NumberLineGauge";
 
+const LABEL: React.CSSProperties = {
+  fontSize: "0.68rem",
+  fontWeight: 600,
+  letterSpacing: "0.12em",
+  textTransform: "uppercase",
+  color: "var(--faint, #94a3c0)",
+  marginBottom: "0.75rem",
+};
+
 export default function LandingPage() {
   return (
     <>
       {/* ── Nav ──────────────────────────────────────────────────────── */}
-      <header style={{ borderBottom: "1px solid var(--dim)" }}>
+      <header style={{ borderBottom: "1px solid var(--dim)", background: "var(--paper)" }}>
         <nav
           style={{
             maxWidth: 1140,
             margin: "0 auto",
-            padding: "0 2.5rem",
+            padding: "0 2rem",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            height: 58,
+            height: 56,
           }}
         >
           <span
             style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.82rem",
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
+              fontSize: "0.95rem",
+              fontWeight: 800,
+              letterSpacing: "-0.02em",
               color: "var(--accent)",
             }}
           >
-            Clearcut
+            Experiment Builder
           </span>
           <div style={{ display: "flex", alignItems: "center", gap: "1.75rem" }}>
             <Link
               href="#how"
               style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.7rem",
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
+                fontSize: "0.78rem",
+                fontWeight: 500,
                 color: "var(--muted)",
                 textDecoration: "none",
               }}
@@ -53,14 +59,15 @@ export default function LandingPage() {
       <section
         style={{
           borderBottom: "1px solid var(--dim)",
-          padding: "5.5rem 0 5rem",
+          padding: "5rem 0",
+          background: "var(--surface, #f4f7ff)",
         }}
       >
         <div
           style={{
             maxWidth: 1140,
             margin: "0 auto",
-            padding: "0 2.5rem",
+            padding: "0 2rem",
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
             gap: "5rem",
@@ -69,59 +76,45 @@ export default function LandingPage() {
           className="hero-grid"
         >
           <div>
-            <p
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.68rem",
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "var(--muted)",
-                marginBottom: "1.5rem",
-              }}
-            >
-              Experiment design · Sample sizing · Readout
-            </p>
+            <p style={LABEL}>Experiment design · Sample sizing · Readout</p>
             <h1
               style={{
-                fontFamily: "var(--font-serif)",
-                fontSize: "clamp(2.8rem, 5.5vw, 4.6rem)",
-                fontWeight: "normal",
-                fontStyle: "italic",
+                fontSize: "clamp(2.6rem, 5vw, 4.2rem)",
+                fontWeight: 800,
+                letterSpacing: "-0.04em",
                 lineHeight: 1.05,
-                marginBottom: "0.75rem",
-              }}
+                marginBottom: "0.6rem",
+                color: "var(--ink)",
+                textWrap: "balance",
+              } as React.CSSProperties}
             >
-              Signal
-              <br />
-              through noise.
+              Signal<br />through noise.
             </h1>
             <p
               style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.88rem",
+                fontFamily: "'Courier New', monospace",
+                fontSize: "0.85rem",
                 color: "var(--muted)",
-                marginBottom: "1.75rem",
+                marginBottom: "1.5rem",
                 letterSpacing: "0.02em",
               }}
             >
-              n &nbsp;≈&nbsp; 2σ²(z
-              <sub>α/2</sub> + z<sub>β</sub>)² / Δ²
+              n &nbsp;≈&nbsp; 2σ²(z<sub>α/2</sub> + z<sub>β</sub>)² / Δ²
             </p>
             <p
               style={{
-                fontFamily: "var(--font-serif)",
-                fontSize: "1.05rem",
+                fontSize: "1rem",
                 lineHeight: 1.75,
                 maxWidth: "44ch",
-                opacity: 0.82,
-                marginBottom: "2.5rem",
+                color: "var(--muted)",
+                marginBottom: "2.25rem",
               }}
             >
               Size your A/B test correctly before you start. Know when it
               finishes. Read the confidence interval right — not just whether
               p&nbsp;&lt;&nbsp;0.05.
             </p>
-            <div style={{ display: "flex", gap: "0.875rem", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", gap: "0.875rem", flexWrap: "wrap", alignItems: "center" }}>
               <Link href="/login" className="btn btn-fill">
                 Get started
               </Link>
@@ -129,27 +122,27 @@ export default function LandingPage() {
                 See how it works
               </Link>
             </div>
+            <p style={{ marginTop: "1.75rem", fontSize: "0.72rem", color: "var(--faint, #94a3c0)" }}>
+              Built by{" "}
+              <Link
+                href="https://www.linkedin.com/in/carloslau"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "var(--accent)", textDecoration: "none", fontWeight: 500 }}
+              >
+                Carlos Lau
+              </Link>
+            </p>
           </div>
           <div>
             <div
               className="card"
-              style={{
-                padding: "2rem 1.75rem 1.75rem",
-              }}
+              style={{ padding: "1.75rem" }}
             >
-              <p
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "0.68rem",
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  color: "var(--muted)",
-                  marginBottom: "1.25rem",
-                }}
-              >
+              <p style={{ ...LABEL, marginBottom: "1.25rem" }}>
                 Confidence interval vs. zero
               </p>
-              <NumberLineGauge ciLow={0.008} ciHigh={0.032} significant={true} />
+              <NumberLineGauge ciLow={0.008} ciHigh={0.032} significant={true} positive={true} />
               <div
                 style={{
                   display: "flex",
@@ -163,20 +156,11 @@ export default function LandingPage() {
                     display: "flex",
                     alignItems: "center",
                     gap: "0.5rem",
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "0.66rem",
-                    letterSpacing: "0.05em",
+                    fontSize: "0.68rem",
                     color: "var(--muted)",
                   }}
                 >
-                  <span
-                    style={{
-                      width: 9,
-                      height: 9,
-                      background: "#2F7D55",
-                      flexShrink: 0,
-                    }}
-                  />
+                  <span style={{ width: 9, height: 9, borderRadius: 2, background: "var(--mint, #75fbc5)", flexShrink: 0 }} />
                   CI clears zero → signal
                 </span>
                 <span
@@ -184,20 +168,11 @@ export default function LandingPage() {
                     display: "flex",
                     alignItems: "center",
                     gap: "0.5rem",
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "0.66rem",
-                    letterSpacing: "0.05em",
+                    fontSize: "0.68rem",
                     color: "var(--muted)",
                   }}
                 >
-                  <span
-                    style={{
-                      width: 9,
-                      height: 9,
-                      background: "#BC4A2C",
-                      flexShrink: 0,
-                    }}
-                  />
+                  <span style={{ width: 9, height: 9, borderRadius: 2, background: "var(--noise)", flexShrink: 0 }} />
                   CI straddles zero → mirage
                 </span>
               </div>
@@ -209,30 +184,12 @@ export default function LandingPage() {
       {/* ── Problem ──────────────────────────────────────────────────── */}
       <section
         id="problem"
-        style={{
-          borderBottom: "1px solid var(--dim)",
-          padding: "4.5rem 0",
-        }}
+        style={{ borderBottom: "1px solid var(--dim)", padding: "4.5rem 0" }}
       >
-        <div style={{ maxWidth: 1140, margin: "0 auto", padding: "0 2.5rem" }}>
-          <p
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.66rem",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "var(--muted)",
-              marginBottom: "2.75rem",
-            }}
-          >
-            The questions every PM can&rsquo;t answer before they start
-          </p>
+        <div style={{ maxWidth: 1140, margin: "0 auto", padding: "0 2rem" }}>
+          <p style={LABEL}>The questions every PM can&rsquo;t answer before they start</p>
           <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: "1.5rem",
-            }}
+            style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.25rem" }}
             className="responsive-grid-3"
           >
             {[
@@ -252,31 +209,20 @@ export default function LandingPage() {
               <div
                 key={q}
                 className="card"
-                style={{
-                  borderTop: "2.5px solid var(--accent)",
-                  padding: "1.75rem",
-                }}
+                style={{ borderTop: "2.5px solid var(--accent)", padding: "1.5rem" }}
               >
                 <p
                   style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: "1.1rem",
-                    fontStyle: "italic",
+                    fontSize: "1rem",
+                    fontWeight: 600,
                     lineHeight: 1.35,
-                    marginBottom: "0.875rem",
-                    fontWeight: "normal",
+                    marginBottom: "0.75rem",
+                    color: "var(--ink)",
                   }}
                 >
                   {q}
                 </p>
-                <p
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "0.8rem",
-                    lineHeight: 1.7,
-                    color: "var(--muted)",
-                  }}
-                >
+                <p style={{ fontSize: "0.85rem", lineHeight: 1.7, color: "var(--muted)" }}>
                   {a}
                 </p>
               </div>
@@ -288,30 +234,12 @@ export default function LandingPage() {
       {/* ── How it works ─────────────────────────────────────────────── */}
       <section
         id="how"
-        style={{
-          borderBottom: "1px solid var(--dim)",
-          padding: "4.5rem 0",
-        }}
+        style={{ borderBottom: "1px solid var(--dim)", padding: "4.5rem 0", background: "var(--surface, #f4f7ff)" }}
       >
-        <div style={{ maxWidth: 1140, margin: "0 auto", padding: "0 2.5rem" }}>
-          <p
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.66rem",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "var(--muted)",
-              marginBottom: "2.75rem",
-            }}
-          >
-            How it works
-          </p>
+        <div style={{ maxWidth: 1140, margin: "0 auto", padding: "0 2rem" }}>
+          <p style={LABEL}>How it works</p>
           <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: "2.5rem",
-            }}
+            style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "2.5rem" }}
             className="responsive-grid-3"
           >
             {[
@@ -334,9 +262,9 @@ export default function LandingPage() {
               <div key={h}>
                 <p
                   style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "0.66rem",
-                    letterSpacing: "0.14em",
+                    fontSize: "0.68rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.12em",
                     textTransform: "uppercase",
                     color: "var(--accent)",
                     marginBottom: "0.75rem",
@@ -346,23 +274,16 @@ export default function LandingPage() {
                 </p>
                 <h3
                   style={{
-                    fontFamily: "var(--font-serif)",
                     fontSize: "1.05rem",
-                    fontWeight: "normal",
+                    fontWeight: 700,
                     marginBottom: "0.625rem",
                     lineHeight: 1.3,
+                    color: "var(--ink)",
                   }}
                 >
                   {h}
                 </h3>
-                <p
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: "0.88rem",
-                    lineHeight: 1.7,
-                    color: "var(--muted)",
-                  }}
-                >
+                <p style={{ fontSize: "0.88rem", lineHeight: 1.7, color: "var(--muted)" }}>
                   {p}
                 </p>
               </div>
@@ -372,31 +293,11 @@ export default function LandingPage() {
       </section>
 
       {/* ── Who it's for ─────────────────────────────────────────────── */}
-      <section
-        style={{
-          borderBottom: "1px solid var(--dim)",
-          padding: "4.5rem 0",
-        }}
-      >
-        <div style={{ maxWidth: 1140, margin: "0 auto", padding: "0 2.5rem" }}>
-          <p
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.66rem",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "var(--muted)",
-              marginBottom: "2.75rem",
-            }}
-          >
-            Who it&rsquo;s for
-          </p>
+      <section style={{ borderBottom: "1px solid var(--dim)", padding: "4.5rem 0" }}>
+        <div style={{ maxWidth: 1140, margin: "0 auto", padding: "0 2rem" }}>
+          <p style={LABEL}>Who it&rsquo;s for</p>
           <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: "1.5rem",
-            }}
+            style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.25rem" }}
             className="responsive-grid-3"
           >
             {[
@@ -409,7 +310,7 @@ export default function LandingPage() {
               {
                 tag: "SaaS & B2B teams",
                 h: "Moderate traffic. Account-level.",
-                p: "At 1,000–50,000 accounts, many experiments are underpowered. Clearcut tells you when that's the case — and what to run instead.",
+                p: "At 1,000–50,000 accounts, many experiments are underpowered. The tool tells you when that's the case — and what to run instead.",
                 animal: "Rabbits · Deer",
               },
               {
@@ -421,15 +322,13 @@ export default function LandingPage() {
             ].map(({ tag, h, p, animal }) => (
               <div
                 key={h}
-                style={{
-                  border: "1px solid var(--dim)",
-                  padding: "1.75rem",
-                }}
+                className="card"
+                style={{ padding: "1.5rem" }}
               >
                 <p
                   style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "0.66rem",
+                    fontSize: "0.68rem",
+                    fontWeight: 700,
                     letterSpacing: "0.1em",
                     textTransform: "uppercase",
                     color: "var(--accent)",
@@ -440,34 +339,27 @@ export default function LandingPage() {
                 </p>
                 <h3
                   style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: "1.05rem",
-                    fontWeight: "normal",
+                    fontSize: "1rem",
+                    fontWeight: 700,
                     marginBottom: "0.6rem",
                     lineHeight: 1.3,
+                    color: "var(--ink)",
                   }}
                 >
                   {h}
                 </h3>
-                <p
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: "0.86rem",
-                    lineHeight: 1.65,
-                    color: "var(--muted)",
-                    marginBottom: "1rem",
-                  }}
-                >
+                <p style={{ fontSize: "0.86rem", lineHeight: 1.65, color: "var(--muted)", marginBottom: "1rem" }}>
                   {p}
                 </p>
                 <span
                   style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "0.65rem",
-                    letterSpacing: "0.06em",
-                    padding: "0.25rem 0.6rem",
-                    border: "1px solid var(--dim)",
-                    color: "var(--muted)",
+                    display: "inline-block",
+                    fontSize: "0.68rem",
+                    fontWeight: 500,
+                    padding: "0.25rem 0.65rem",
+                    borderRadius: "5px",
+                    background: "var(--aqua, #e7edff)",
+                    color: "var(--accent)",
                   }}
                 >
                   {animal}
@@ -484,7 +376,7 @@ export default function LandingPage() {
           style={{
             maxWidth: 1140,
             margin: "0 auto",
-            padding: "0 2.5rem",
+            padding: "0 2rem",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
@@ -492,28 +384,26 @@ export default function LandingPage() {
             flexWrap: "wrap",
           }}
         >
-          <p
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.7rem",
-              letterSpacing: "0.06em",
-              color: "var(--muted)",
-            }}
-          >
-            © 2025 Clearcut
+          <p style={{ fontSize: "0.78rem", fontWeight: 800, letterSpacing: "-0.02em", color: "var(--accent)" }}>
+            Experiment Builder
+          </p>
+          <p style={{ fontSize: "0.72rem", color: "var(--faint, #94a3c0)" }}>
+            Built by{" "}
+            <Link
+              href="https://www.linkedin.com/in/carloslau"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "var(--accent)", textDecoration: "none", fontWeight: 500 }}
+            >
+              Carlos Lau
+            </Link>
           </p>
           <nav style={{ display: "flex", gap: "1.5rem" }}>
             {["Privacy", "Terms", "Contact"].map((label) => (
               <Link
                 key={label}
                 href="#"
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "0.7rem",
-                  letterSpacing: "0.06em",
-                  color: "var(--muted)",
-                  textDecoration: "none",
-                }}
+                style={{ fontSize: "0.72rem", color: "var(--muted)", textDecoration: "none" }}
               >
                 {label}
               </Link>
