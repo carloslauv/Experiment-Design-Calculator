@@ -357,7 +357,7 @@ export default function Calculator({ onSave, loadInputs }: CalcProps = {}) {
       {/* ── Business model selector ── */}
       <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
         <span style={SECTION_LABEL}>Growth model <span style={{ opacity: 0.5, fontStyle: "italic", letterSpacing: 0, textTransform: "none" }}>— Janz (2014)</span></span>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "0.5rem" }}>
+        <div className="model-cards">
           {BUSINESS_MODELS.map(m => {
             const active = businessModel === m.id;
             return (
@@ -408,7 +408,7 @@ export default function Calculator({ onSave, loadInputs }: CalcProps = {}) {
       )}
 
       {/* ── Two-column layout: inputs | results ── */}
-      <div style={{ display: "grid", gridTemplateColumns: "minmax(280px, 360px) 1fr", gap: "2rem", alignItems: "start" }}>
+      <div className="calc-columns">
 
         {/* LEFT: inputs */}
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
@@ -523,7 +523,7 @@ export default function Calculator({ onSave, loadInputs }: CalcProps = {}) {
 
           {mode === "plan" && planResult && (
             <>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0.75rem" }}>
+              <div className="stat-row-3">
                 <StatBox label="Per variant" value={fmt(planResult.samplePerVariant)} sub="required" highlight />
                 <StatBox label="Total sample" value={fmt(planResult.totalSample)} sub={`${parseInt(variants) + 1} arms`} />
                 <StatBox
@@ -569,7 +569,7 @@ export default function Calculator({ onSave, loadInputs }: CalcProps = {}) {
             const verdictColor = win ? "var(--signal)" : "var(--noise)";
             return (
               <>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0.75rem" }}>
+                <div className="stat-row-3">
                   <StatBox label="Relative lift" value={(readoutResult.relativeLift >= 0 ? "+" : "") + pct(readoutResult.relativeLift)} sub={`${pct(readoutResult.controlRate)} → ${pct(readoutResult.variantRate)}`} highlight={readoutResult.significant} highlightColor={win ? "var(--signal)" : lose ? "var(--noise)" : undefined} />
                   <StatBox label="p-value" value={readoutResult.pValue < 0.001 ? "<0.001" : readoutResult.pValue.toFixed(3)} sub={readoutResult.significant ? (win ? "significant ✓" : "significant ✗") : "not significant"} />
                   <StatBox label="z-score" value={readoutResult.zScore.toFixed(2)} sub={`${alpha}% confidence`} />
