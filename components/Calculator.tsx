@@ -119,18 +119,21 @@ function StatBox({
   value,
   sub,
   highlight,
+  highlightColor,
 }: {
   label: string;
   value: string;
   sub?: string;
   highlight?: boolean;
+  highlightColor?: string;
 }) {
+  const color = highlight ? (highlightColor ?? "var(--accent)") : "var(--dim)";
   return (
     <div
       style={{
         padding: "1rem 1.25rem",
-        border: `1px solid ${highlight ? "var(--accent)" : "var(--dim)"}`,
-        boxShadow: highlight ? "3px 3px 0 var(--accent)" : "3px 3px 0 var(--dim)",
+        border: `1px solid ${highlight ? color : "var(--dim)"}`,
+        boxShadow: `3px 3px 0 ${highlight ? color : "var(--dim)"}`,
         background: "var(--paper)",
       }}
     >
@@ -151,7 +154,7 @@ function StatBox({
           fontFamily: "var(--font-mono)",
           fontSize: "1.5rem",
           fontVariantNumeric: "tabular-nums",
-          color: highlight ? "var(--accent)" : "var(--ink)",
+          color: highlight ? color : "var(--ink)",
           lineHeight: 1,
         }}
       >
@@ -549,7 +552,13 @@ export default function Calculator({ onSave, loadInputs }: CalcProps = {}) {
           </>
         )}
 
-        {mode === "readout" && readoutResult && (
+        {mode === "readout" && readoutResult && (() => {
+          const win = readoutResult.significant && readoutResult.relativeLift > 0;
+          const lose = readoutResult.significant && readoutResult.relativeLift <= 0;
+          const borderColor = win ? "var(--signal)" : "var(--noise)";
+          const verdictColor = win ? "var(--signal)" : "var(--noise)";
+
+          return (
           <>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0.75rem" }}>
               <StatBox
@@ -557,11 +566,12 @@ export default function Calculator({ onSave, loadInputs }: CalcProps = {}) {
                 value={(readoutResult.relativeLift >= 0 ? "+" : "") + pct(readoutResult.relativeLift)}
                 sub={`${pct(readoutResult.controlRate)} → ${pct(readoutResult.variantRate)}`}
                 highlight={readoutResult.significant}
+                highlightColor={win ? "var(--signal)" : lose ? "var(--noise)" : undefined}
               />
               <StatBox
                 label="p-value"
                 value={readoutResult.pValue < 0.001 ? "<0.001" : readoutResult.pValue.toFixed(3)}
-                sub={readoutResult.significant ? "significant ✓" : "not significant"}
+                sub={readoutResult.significant ? (win ? "significant ✓" : "significant ✗") : "not significant"}
               />
               <StatBox
                 label="z-score"
@@ -587,13 +597,14 @@ export default function Calculator({ onSave, loadInputs }: CalcProps = {}) {
                 ciLow={readoutResult.ciLow}
                 ciHigh={readoutResult.ciHigh}
                 significant={readoutResult.significant}
+                positive={win}
               />
               <div
                 style={{
                   marginTop: "1rem",
                   padding: "0.75rem 1rem",
                   background: "transparent",
-                  borderLeft: `3px solid ${readoutResult.significant ? "var(--signal)" : "var(--noise)"}`,
+                  borderLeft: `3px solid ${borderColor}`,
                   fontFamily: "var(--font-mono)",
                   fontSize: "0.75rem",
                   color: "var(--ink)",
@@ -601,16 +612,19 @@ export default function Calculator({ onSave, loadInputs }: CalcProps = {}) {
                   lineHeight: 1.6,
                 }}
               >
-                <span style={{ color: readoutResult.significant ? "var(--signal)" : "var(--noise)", fontWeight: 600 }}>
-                  {readoutResult.significant ? "✓ Significant." : "✗ Not significant."}
+                <span style={{ color: verdictColor, fontWeight: 600 }}>
+                  {win ? "✓ Significant — variant wins." : lose ? "✗ Significant — variant loses." : "✗ Not significant."}
                 </span>
-                {readoutResult.significant
-                  ? ` The CI clears zero at α=${(1 - parseFloat(alpha) / 100).toFixed(2)}. The effect is real.`
+                {win
+                  ? ` CI clears zero at α=${(1 - parseFloat(alpha) / 100).toFixed(2)}. The lift is real.`
+                  : lose
+                  ? ` CI clears zero at α=${(1 - parseFloat(alpha) / 100).toFixed(2)}. The regression is real — do not ship.`
                   : " The CI crosses zero — cannot rule out noise."}
               </div>
             </div>
           </>
-        )}
+          );
+        })()}
 
         {mode === "plan" && !planResult && (
           <div style={{ padding: "2rem", color: "var(--muted)", fontFamily: "var(--font-mono)", fontSize: "0.75rem" }}>

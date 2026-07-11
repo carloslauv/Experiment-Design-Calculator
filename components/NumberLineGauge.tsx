@@ -3,12 +3,13 @@
 import { useEffect, useRef } from "react";
 
 interface Props {
-  ciLow: number;   // e.g. -0.032
-  ciHigh: number;  // e.g. 0.021
+  ciLow: number;
+  ciHigh: number;
   significant: boolean;
+  positive?: boolean;  // significant AND lift > 0 → green; else red
 }
 
-export default function NumberLineGauge({ ciLow, ciHigh, significant }: Props) {
+export default function NumberLineGauge({ ciLow, ciHigh, significant, positive }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   function draw(canvas: HTMLCanvasElement) {
@@ -22,7 +23,7 @@ export default function NumberLineGauge({ ciLow, ciHigh, significant }: Props) {
     const mu  = getComputedStyle(document.documentElement).getPropertyValue("--muted").trim() || "#7A7060";
     const sig = "#2F7D55";
     const noi = "#BC4A2C";
-    const color = significant ? sig : noi;
+    const color = (significant && positive) ? sig : noi;
 
     const PAD = 28;
     const L = PAD;
