@@ -125,7 +125,7 @@ export default function LandingPage() {
             <p style={{ marginTop: "1.75rem", fontSize: "0.72rem", color: "var(--faint, #94a3c0)" }}>
               Built by{" "}
               <Link
-                href="https://www.linkedin.com/in/carloslau"
+                href="https://www.linkedin.com/in/carloslauv/"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ color: "var(--accent)", textDecoration: "none", fontWeight: 500 }}
@@ -390,7 +390,7 @@ export default function LandingPage() {
           <p style={{ fontSize: "0.72rem", color: "var(--faint, #94a3c0)" }}>
             Built by{" "}
             <Link
-              href="https://www.linkedin.com/in/carloslau"
+              href="https://www.linkedin.com/in/carloslauv/"
               target="_blank"
               rel="noopener noreferrer"
               style={{ color: "var(--accent)", textDecoration: "none", fontWeight: 500 }}

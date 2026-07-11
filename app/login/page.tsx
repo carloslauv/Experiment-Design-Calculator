@@ -77,7 +77,7 @@ export default async function LoginPage() {
         <p style={{ textAlign: "center", marginTop: "1.5rem", fontSize: "0.72rem", color: "var(--faint, #94a3c0)" }}>
           Built by{" "}
           <Link
-            href="https://www.linkedin.com/in/carloslau"
+            href="https://www.linkedin.com/in/carloslauv/"
             target="_blank"
             rel="noopener noreferrer"
             style={{ color: "var(--accent)", textDecoration: "none", fontWeight: 500 }}

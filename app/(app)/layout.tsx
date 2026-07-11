@@ -49,7 +49,7 @@ export default async function AppLayout({
               Guide
             </Link>
             <Link
-              href="https://www.linkedin.com/in/carloslau"
+              href="https://www.linkedin.com/in/carloslauv/"
               target="_blank"
               rel="noopener noreferrer"
               style={{
