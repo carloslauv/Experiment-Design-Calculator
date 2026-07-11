@@ -13,6 +13,69 @@ import { BUSINESS_MODELS, getModel } from "@/lib/businessModels";
 
 export type { ScenarioInputs };
 
+function JanzExplainer() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ marginTop: "0.2rem" }}>
+      <button
+        onClick={() => setOpen(o => !o)}
+        style={{
+          background: "none",
+          border: "none",
+          padding: 0,
+          cursor: "pointer",
+          fontFamily: "var(--font-mono)",
+          fontSize: "0.62rem",
+          letterSpacing: "0.06em",
+          color: "var(--accent)",
+          textDecoration: "underline",
+          textDecorationStyle: "dotted",
+          textUnderlineOffset: "3px",
+        }}
+      >
+        {open ? "▲ Hide" : "▼ What is this?"}
+      </button>
+      {open && (
+        <div style={{
+          marginTop: "0.75rem",
+          padding: "1rem 1.1rem",
+          borderLeft: "2px solid var(--dim)",
+          fontFamily: "var(--font-serif)",
+          fontSize: "0.82rem",
+          color: "var(--ink)",
+          lineHeight: 1.75,
+          display: "flex",
+          flexDirection: "column",
+          gap: "0.6rem",
+        }}>
+          <p style={{ margin: 0 }}>
+            <strong>The $100M business model framework</strong> by{" "}
+            <a
+              href="https://christophjanz.blogspot.com/2014/10/five-ways-to-build-100-million-business.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "var(--accent)" }}
+            >
+              Christoph Janz (2014)
+            </a>{" "}
+            shows that the path to $100M in annual revenue depends on the price you charge — which dictates how many customers you need.
+          </p>
+          <p style={{ margin: 0 }}>
+            The math is simple:{" "}
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.78rem", background: "var(--dim)", padding: "0.1rem 0.4rem" }}>
+              Revenue = # customers × ARPA
+            </span>{" "}
+            where ARPA is average revenue per account per year. To reach $100M you can either sell to a few large customers or to many small ones — each path demands a completely different go-to-market and experimentation strategy.
+          </p>
+          <p style={{ margin: 0 }}>
+            High-volume models (🪰 Flies, 🐭 Mice) have the traffic needed for rigorous A/B testing. Lower-volume models (🦌 Deer, 🐘 Elephants) serve too few accounts — the calculator will show you why, and suggest what to do instead.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function inputsToParams(inputs: ScenarioInputs): URLSearchParams {
   const p = new URLSearchParams();
   p.set("m",   inputs.mode);
@@ -323,6 +386,7 @@ export default function Calculator({ onSave, loadInputs }: CalcProps = {}) {
         <div style={{ fontFamily: "var(--font-serif)", fontSize: "0.82rem", color: "var(--muted)", lineHeight: 1.5 }}>
           {model.tagline} · ~{model.customersNeeded} customers needed
         </div>
+        <JanzExplainer />
       </div>
 
       {/* ── Traffic warning (Deer / Elephants) ── */}
