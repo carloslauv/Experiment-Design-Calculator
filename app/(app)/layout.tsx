@@ -55,7 +55,7 @@ export default async function AppLayout({
               style={{
                 fontSize: "0.72rem",
                 fontWeight: 500,
-                color: "var(--faint, #94a3c0)",
+                color: "var(--accent)",
                 textDecoration: "none",
               }}
             >
