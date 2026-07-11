@@ -1,10 +1,12 @@
 import { auth } from "@/lib/auth";
-import Calculator from "@/components/Calculator";
+import { listScenarios } from "@/lib/actions/scenarios";
+import AppShell from "@/components/AppShell";
 
 export const metadata = { title: "Calculator — Clearcut" };
 
 export default async function AppPage() {
   const session = await auth();
+  const scenarios = session?.user?.id ? await listScenarios() : [];
 
   return (
     <main
@@ -13,7 +15,7 @@ export default async function AppPage() {
         padding: "2.5rem 2.5rem 4rem",
       }}
     >
-      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <div style={{ marginBottom: "2rem" }}>
           <p
             style={{
@@ -36,10 +38,12 @@ export default async function AppPage() {
               color: "var(--ink)",
             }}
           >
-            {session?.user?.name ? `Welcome back, ${session.user.name.split(" ")[0]}.` : "Plan your experiment."}
+            {session?.user?.name
+              ? `Welcome back, ${session.user.name.split(" ")[0]}.`
+              : "Plan your experiment."}
           </h1>
         </div>
-        <Calculator />
+        <AppShell initialScenarios={scenarios} />
       </div>
     </main>
   );

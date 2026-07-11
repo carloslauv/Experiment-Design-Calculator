@@ -1,14 +1,17 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import NumberLineGauge from "./NumberLineGauge";
 import {
   calculateSampleSize,
   calculateReadout,
   estimateDuration,
 } from "@/lib/stats";
+import type { ScenarioInputs } from "@/lib/actions/scenarios";
 
 type Mode = "plan" | "readout";
+
+export type { ScenarioInputs };
 
 const FIELD: React.CSSProperties = {
   width: "100%",
@@ -121,22 +124,32 @@ function StatBox({
   );
 }
 
-export default function Calculator() {
-  const [mode, setMode] = useState<Mode>("plan");
+interface CalcProps {
+  onSave?: (inputs: ScenarioInputs) => void;
+  loadInputs?: ScenarioInputs | null;
+}
+
+export default function Calculator({ onSave, loadInputs }: CalcProps = {}) {
+  const [mode, setMode] = useState<Mode>(loadInputs?.mode ?? "plan");
 
   // Plan mode inputs
-  const [baselineRate, setBaselineRate] = useState("5");
-  const [mde, setMde] = useState("10");
-  const [power, setPower] = useState("80");
-  const [alpha, setAlpha] = useState("95");
-  const [variants, setVariants] = useState("1");
-  const [dailyVisitors, setDailyVisitors] = useState("1000");
+  const [baselineRate, setBaselineRate] = useState(loadInputs?.baselineRate ?? "5");
+  const [mde, setMde] = useState(loadInputs?.mde ?? "10");
+  const [power, setPower] = useState(loadInputs?.power ?? "80");
+  const [alpha, setAlpha] = useState(loadInputs?.alpha ?? "95");
+  const [variants, setVariants] = useState(loadInputs?.variants ?? "1");
+  const [dailyVisitors, setDailyVisitors] = useState(loadInputs?.dailyVisitors ?? "1000");
 
   // Readout mode inputs
-  const [ctrlUsers, setCtrlUsers] = useState("5000");
-  const [ctrlConv, setCtrlConv] = useState("250");
-  const [varUsers, setVarUsers] = useState("5000");
-  const [varConv, setVarConv] = useState("310");
+  const [ctrlUsers, setCtrlUsers] = useState(loadInputs?.ctrlUsers ?? "5000");
+  const [ctrlConv, setCtrlConv] = useState(loadInputs?.ctrlConv ?? "250");
+  const [varUsers, setVarUsers] = useState(loadInputs?.varUsers ?? "5000");
+  const [varConv, setVarConv] = useState(loadInputs?.varConv ?? "310");
+
+  const currentInputs = useCallback((): ScenarioInputs => ({
+    mode, baselineRate, mde, power, alpha, variants, dailyVisitors,
+    ctrlUsers, ctrlConv, varUsers, varConv,
+  }), [mode, baselineRate, mde, power, alpha, variants, dailyVisitors, ctrlUsers, ctrlConv, varUsers, varConv]);
 
   const planResult = useMemo(() => {
     const b = parseFloat(baselineRate) / 100;
@@ -304,6 +317,27 @@ export default function Calculator() {
               </Field>
             </div>
           </div>
+        )}
+
+        {/* Save button */}
+        {onSave && (
+          <button
+            onClick={() => onSave(currentInputs())}
+            style={{
+              padding: "0.6rem 0.75rem",
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.62rem",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              background: "var(--accent)",
+              color: "#fff",
+              border: "none",
+              cursor: "pointer",
+              width: "100%",
+            }}
+          >
+            Save scenario
+          </button>
         )}
       </div>
 
