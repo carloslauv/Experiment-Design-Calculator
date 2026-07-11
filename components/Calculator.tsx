@@ -2,6 +2,38 @@
 
 import { useState, useMemo, useCallback } from "react";
 import NumberLineGauge from "./NumberLineGauge";
+
+export function inputsToParams(inputs: ScenarioInputs): URLSearchParams {
+  const p = new URLSearchParams();
+  p.set("m", inputs.mode);
+  p.set("b", inputs.baselineRate);
+  p.set("mde", inputs.mde);
+  p.set("pw", inputs.power);
+  p.set("al", inputs.alpha);
+  p.set("v", inputs.variants);
+  p.set("dv", inputs.dailyVisitors);
+  p.set("cu", inputs.ctrlUsers);
+  p.set("cc", inputs.ctrlConv);
+  p.set("vu", inputs.varUsers);
+  p.set("vc", inputs.varConv);
+  return p;
+}
+
+export function paramsToInputs(p: URLSearchParams): Partial<ScenarioInputs> {
+  return {
+    mode: (p.get("m") as "plan" | "readout") ?? undefined,
+    baselineRate: p.get("b") ?? undefined,
+    mde: p.get("mde") ?? undefined,
+    power: p.get("pw") ?? undefined,
+    alpha: p.get("al") ?? undefined,
+    variants: p.get("v") ?? undefined,
+    dailyVisitors: p.get("dv") ?? undefined,
+    ctrlUsers: p.get("cu") ?? undefined,
+    ctrlConv: p.get("cc") ?? undefined,
+    varUsers: p.get("vu") ?? undefined,
+    varConv: p.get("vc") ?? undefined,
+  };
+}
 import {
   calculateSampleSize,
   calculateReadout,
@@ -138,6 +170,40 @@ function StatBox({
         </div>
       )}
     </div>
+  );
+}
+
+function CopyLinkButton({ getInputs }: { getInputs: () => ScenarioInputs }) {
+  const [copied, setCopied] = useState(false);
+
+  function handleCopy() {
+    const params = inputsToParams(getInputs());
+    const url = `${window.location.origin}/share?${params.toString()}`;
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }
+
+  return (
+    <button
+      onClick={handleCopy}
+      style={{
+        padding: "0.6rem 0.75rem",
+        fontFamily: "var(--font-mono)",
+        fontSize: "0.62rem",
+        letterSpacing: "0.1em",
+        textTransform: "uppercase",
+        background: "transparent",
+        color: copied ? "var(--signal)" : "var(--muted)",
+        border: "1px solid var(--dim)",
+        cursor: "pointer",
+        width: "100%",
+        transition: "color 0.15s",
+      }}
+    >
+      {copied ? "Link copied ✓" : "Copy shareable link"}
+    </button>
   );
 }
 
@@ -388,26 +454,29 @@ export default function Calculator({ onSave, loadInputs }: CalcProps = {}) {
           </div>
         )}
 
-        {/* Save button */}
-        {onSave && (
-          <button
-            onClick={() => onSave(currentInputs())}
-            style={{
-              padding: "0.6rem 0.75rem",
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.62rem",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              background: "var(--accent)",
-              color: "#fff",
-              border: "none",
-              cursor: "pointer",
-              width: "100%",
-            }}
-          >
-            Save scenario
-          </button>
-        )}
+        {/* Action buttons */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+          {onSave && (
+            <button
+              onClick={() => onSave(currentInputs())}
+              style={{
+                padding: "0.6rem 0.75rem",
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.62rem",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                background: "var(--accent)",
+                color: "#fff",
+                border: "none",
+                cursor: "pointer",
+                width: "100%",
+              }}
+            >
+              Save scenario
+            </button>
+          )}
+          <CopyLinkButton getInputs={currentInputs} />
+        </div>
       </div>
 
       {/* ── RIGHT: results ── */}
