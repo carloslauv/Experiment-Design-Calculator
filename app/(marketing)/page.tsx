@@ -149,7 +149,7 @@ export default function LandingPage() {
               >
                 Confidence interval vs. zero
               </p>
-              <NumberLineGauge />
+              <NumberLineGauge ciLow={0.008} ciHigh={0.032} significant={true} />
               <div
                 style={{
                   display: "flex",
