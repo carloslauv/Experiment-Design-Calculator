@@ -8,6 +8,8 @@ import { revalidatePath } from "next/cache";
 
 export interface ScenarioInputs {
   mode: "plan" | "readout";
+  businessModel: string;
+  metricId: string | null;
   baselineRate: string;
   mde: string;
   power: string;

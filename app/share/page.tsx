@@ -15,6 +15,8 @@ export default async function SharePage({ searchParams }: Props) {
 
   const inputs: ScenarioInputs = {
     mode: raw.mode ?? "plan",
+    businessModel: raw.businessModel ?? "flies",
+    metricId: raw.metricId ?? null,
     baselineRate: raw.baselineRate ?? "5",
     mde: raw.mde ?? "10",
     power: raw.power ?? "80",
