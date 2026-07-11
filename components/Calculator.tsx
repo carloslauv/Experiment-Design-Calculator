@@ -13,6 +13,23 @@ type Mode = "plan" | "readout";
 
 export type { ScenarioInputs };
 
+interface Context {
+  id: string;
+  label: string;
+  description: string;
+  baselineRate: string;
+  mde: string;
+  power: string;
+}
+
+const CONTEXTS: Context[] = [
+  { id: "conversion",   label: "Conversion",   description: "Signup, purchase, checkout",      baselineRate: "3",  mde: "15", power: "80" },
+  { id: "ctr",          label: "Click-through", description: "CTA, link, email click",          baselineRate: "8",  mde: "10", power: "80" },
+  { id: "engagement",   label: "Engagement",    description: "Feature adoption, session depth", baselineRate: "20", mde: "8",  power: "80" },
+  { id: "activation",   label: "Activation",    description: "Onboarding, setup completion",    baselineRate: "40", mde: "5",  power: "80" },
+  { id: "retention",    label: "Retention",     description: "D7 / D30 return rate",            baselineRate: "25", mde: "8",  power: "80" },
+];
+
 const FIELD: React.CSSProperties = {
   width: "100%",
   padding: "0.6rem 0.75rem",
@@ -131,6 +148,7 @@ interface CalcProps {
 
 export default function Calculator({ onSave, loadInputs }: CalcProps = {}) {
   const [mode, setMode] = useState<Mode>(loadInputs?.mode ?? "plan");
+  const [contextId, setContextId] = useState<string | null>(null);
 
   // Plan mode inputs
   const [baselineRate, setBaselineRate] = useState(loadInputs?.baselineRate ?? "5");
@@ -139,6 +157,13 @@ export default function Calculator({ onSave, loadInputs }: CalcProps = {}) {
   const [alpha, setAlpha] = useState(loadInputs?.alpha ?? "95");
   const [variants, setVariants] = useState(loadInputs?.variants ?? "1");
   const [dailyVisitors, setDailyVisitors] = useState(loadInputs?.dailyVisitors ?? "1000");
+
+  function applyContext(ctx: Context) {
+    setContextId(ctx.id);
+    setBaselineRate(ctx.baselineRate);
+    setMde(ctx.mde);
+    setPower(ctx.power);
+  }
 
   // Readout mode inputs
   const [ctrlUsers, setCtrlUsers] = useState(loadInputs?.ctrlUsers ?? "5000");
@@ -250,6 +275,50 @@ export default function Calculator({ onSave, loadInputs }: CalcProps = {}) {
 
         {mode === "plan" ? (
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+
+            {/* Context selector */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+              <span style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.58rem",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "var(--muted)",
+              }}>
+                Experiment type
+              </span>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+                {CONTEXTS.map(ctx => (
+                  <button
+                    key={ctx.id}
+                    onClick={() => applyContext(ctx)}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      padding: "0.5rem 0.75rem",
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "0.68rem",
+                      background: contextId === ctx.id ? "var(--accent)" : "transparent",
+                      color: contextId === ctx.id ? "#fff" : "var(--ink)",
+                      border: `1px solid ${contextId === ctx.id ? "var(--accent)" : "var(--dim)"}`,
+                      cursor: "pointer",
+                      textAlign: "left",
+                    }}
+                  >
+                    <span style={{ fontWeight: contextId === ctx.id ? 500 : 400 }}>{ctx.label}</span>
+                    <span style={{
+                      fontSize: "0.58rem",
+                      color: contextId === ctx.id ? "rgba(255,255,255,0.7)" : "var(--muted)",
+                      letterSpacing: "0.04em",
+                    }}>
+                      {ctx.description}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <Field label="Baseline conversion rate" hint="Your current rate before the test">
               <div style={{ position: "relative" }}>
                 <input
@@ -258,7 +327,7 @@ export default function Calculator({ onSave, loadInputs }: CalcProps = {}) {
                   max="99.99"
                   step="0.1"
                   value={baselineRate}
-                  onChange={e => setBaselineRate(e.target.value)}
+                  onChange={e => { setBaselineRate(e.target.value); setContextId(null); }}
                   style={{ ...FIELD, paddingRight: "2rem" }}
                 />
                 <span style={{ position: "absolute", right: "0.75rem", top: "50%", transform: "translateY(-50%)", fontFamily: "var(--font-mono)", fontSize: "0.8rem", color: "var(--muted)" }}>%</span>
@@ -273,7 +342,7 @@ export default function Calculator({ onSave, loadInputs }: CalcProps = {}) {
                   max="500"
                   step="0.5"
                   value={mde}
-                  onChange={e => setMde(e.target.value)}
+                  onChange={e => { setMde(e.target.value); setContextId(null); }}
                   style={{ ...FIELD, paddingRight: "2rem" }}
                 />
                 <span style={{ position: "absolute", right: "0.75rem", top: "50%", transform: "translateY(-50%)", fontFamily: "var(--font-mono)", fontSize: "0.8rem", color: "var(--muted)" }}>%</span>
