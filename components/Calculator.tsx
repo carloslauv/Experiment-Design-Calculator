@@ -77,8 +77,8 @@ const FIELD: React.CSSProperties = {
 const LABEL: React.CSSProperties = {
   display: "block",
   fontFamily: "var(--font-mono)",
-  fontSize: "0.6rem",
-  letterSpacing: "0.12em",
+  fontSize: "0.68rem",
+  letterSpacing: "0.1em",
   textTransform: "uppercase",
   color: "var(--muted)",
   marginBottom: "0.4rem",
@@ -101,7 +101,7 @@ function Field({
         <span
           style={{
             fontFamily: "var(--font-mono)",
-            fontSize: "0.58rem",
+            fontSize: "0.66rem",
             color: "var(--muted)",
             marginTop: "0.3rem",
             opacity: 0.7,
@@ -137,8 +137,8 @@ function StatBox({
       <div
         style={{
           fontFamily: "var(--font-mono)",
-          fontSize: "0.58rem",
-          letterSpacing: "0.12em",
+          fontSize: "0.66rem",
+          letterSpacing: "0.1em",
           textTransform: "uppercase",
           color: "var(--muted)",
           marginBottom: "0.35rem",
@@ -149,7 +149,7 @@ function StatBox({
       <div
         style={{
           fontFamily: "var(--font-mono)",
-          fontSize: "1.4rem",
+          fontSize: "1.5rem",
           fontVariantNumeric: "tabular-nums",
           color: highlight ? "var(--accent)" : "var(--ink)",
           lineHeight: 1,
@@ -161,7 +161,7 @@ function StatBox({
         <div
           style={{
             fontFamily: "var(--font-mono)",
-            fontSize: "0.62rem",
+            fontSize: "0.7rem",
             color: "var(--muted)",
             marginTop: "0.3rem",
           }}
@@ -514,8 +514,8 @@ export default function Calculator({ onSave, loadInputs }: CalcProps = {}) {
               <div
                 style={{
                   fontFamily: "var(--font-mono)",
-                  fontSize: "0.6rem",
-                  letterSpacing: "0.12em",
+                  fontSize: "0.68rem",
+                  letterSpacing: "0.1em",
                   textTransform: "uppercase",
                   color: "var(--muted)",
                   marginBottom: "0.25rem",
@@ -536,7 +536,7 @@ export default function Calculator({ onSave, loadInputs }: CalcProps = {}) {
                     display: "flex",
                     justifyContent: "space-between",
                     fontFamily: "var(--font-mono)",
-                    fontSize: "0.72rem",
+                    fontSize: "0.78rem",
                     borderBottom: "1px solid var(--dim)",
                     paddingBottom: "0.35rem",
                   }}
@@ -574,8 +574,8 @@ export default function Calculator({ onSave, loadInputs }: CalcProps = {}) {
               <div
                 style={{
                   fontFamily: "var(--font-mono)",
-                  fontSize: "0.6rem",
-                  letterSpacing: "0.12em",
+                  fontSize: "0.68rem",
+                  letterSpacing: "0.1em",
                   textTransform: "uppercase",
                   color: "var(--muted)",
                   marginBottom: "1rem",
@@ -591,18 +591,22 @@ export default function Calculator({ onSave, loadInputs }: CalcProps = {}) {
               <div
                 style={{
                   marginTop: "1rem",
-                  padding: "0.75rem",
-                  background: readoutResult.significant ? "var(--signal)" + "14" : "var(--noise)" + "14",
-                  border: `1px solid ${readoutResult.significant ? "var(--signal)" : "var(--noise)"}`,
+                  padding: "0.75rem 1rem",
+                  background: "transparent",
+                  borderLeft: `3px solid ${readoutResult.significant ? "var(--signal)" : "var(--noise)"}`,
                   fontFamily: "var(--font-mono)",
-                  fontSize: "0.7rem",
-                  color: readoutResult.significant ? "var(--signal)" : "var(--noise)",
-                  letterSpacing: "0.04em",
+                  fontSize: "0.75rem",
+                  color: "var(--ink)",
+                  letterSpacing: "0.03em",
+                  lineHeight: 1.6,
                 }}
               >
+                <span style={{ color: readoutResult.significant ? "var(--signal)" : "var(--noise)", fontWeight: 600 }}>
+                  {readoutResult.significant ? "✓ Significant." : "✗ Not significant."}
+                </span>
                 {readoutResult.significant
-                  ? `✓ Statistically significant at α=${(1 - parseFloat(alpha) / 100).toFixed(2)}. The CI clears zero — the effect is real.`
-                  : `✗ Not significant. The CI crosses zero — cannot rule out noise.`}
+                  ? ` The CI clears zero at α=${(1 - parseFloat(alpha) / 100).toFixed(2)}. The effect is real.`
+                  : " The CI crosses zero — cannot rule out noise."}
               </div>
             </div>
           </>

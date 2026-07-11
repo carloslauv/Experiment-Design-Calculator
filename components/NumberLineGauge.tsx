@@ -68,7 +68,7 @@ export default function NumberLineGauge({ ciLow, ciHigh, significant }: Props) {
 
     // Zero label
     ctx.fillStyle = fg;
-    ctx.font = `11px 'Courier New', monospace`;
+    ctx.font = `13px 'Courier New', monospace`;
     ctx.textAlign = "center";
     ctx.fillText("0", CX, AY + 22);
 
@@ -107,7 +107,7 @@ export default function NumberLineGauge({ ciLow, ciHigh, significant }: Props) {
     // CI label
     const fmt = (v: number) => (v >= 0 ? "+" : "") + (v * 100).toFixed(1) + "%";
     ctx.fillStyle = color;
-    ctx.font = `10px 'Courier New', monospace`;
+    ctx.font = `12px 'Courier New', monospace`;
     ctx.textAlign = "center";
     ctx.fillText(`${fmt(ciLow)}  to  ${fmt(ciHigh)}`, midX, BY - 13);
 
