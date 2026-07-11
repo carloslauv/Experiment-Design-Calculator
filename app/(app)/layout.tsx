@@ -1,5 +1,6 @@
 import { auth, signOut } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -36,7 +37,20 @@ export default async function AppLayout({
           >
             Clearcut
           </span>
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
+            <Link
+              href="/guide"
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.68rem",
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                color: "var(--muted)",
+                textDecoration: "none",
+              }}
+            >
+              Guide
+            </Link>
             {session.user.image && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
